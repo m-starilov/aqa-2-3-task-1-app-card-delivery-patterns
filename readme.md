@@ -1,1 +1,1 @@
-# aqa-2-3-task-1-app-card-delivery-(patterns)  
+# aqa-2-3-task-1-app-card-delivery-(patterns)   [![Build status](https://ci.appveyor.com/api/projects/status/uxb3o6g58c5v4g1x?svg=true)](https://ci.appveyor.com/project/m-starilov/aqa-2-3-task-1-app-card-delivery-patterns)
