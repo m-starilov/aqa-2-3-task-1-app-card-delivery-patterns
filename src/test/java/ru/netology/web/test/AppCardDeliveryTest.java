@@ -17,14 +17,22 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class AppCardDeliveryTest {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    private final DataForCardDeliveryOrder clientInfo = DataGenerator.generateClientInfo();
+    private DataForCardDeliveryOrder clientInfo = DataGenerator.generateClientInfo();
 
     @Test
     void shouldRescheduledRequest() {
         open("http://localhost:9999");
 
         SelenideElement form = $("form");
-        form.$("[data-test-id=city] input").setValue(clientInfo.getCity());
+        SelenideElement cityInput = form.$("[data-test-id=city] input");
+        cityInput.sendKeys(clientInfo.getCity().substring(0,2));
+        while (!$(byText(clientInfo.getCity())).exists()) {
+            clientInfo = DataGenerator.generateClientInfo();
+            cityInput.sendKeys(Keys.BACK_SPACE);
+            cityInput.sendKeys(Keys.BACK_SPACE);
+            cityInput.sendKeys(clientInfo.getCity().substring(0,2));
+        }
+        $(byText(clientInfo.getCity())).click();
         SelenideElement date = form.$$("[data-test-id=date] input").last();
         date.doubleClick();
         date.sendKeys(Keys.BACK_SPACE);
@@ -38,7 +46,7 @@ public class AppCardDeliveryTest {
         $(withText(clientInfo.getDate().format(formatter))).shouldBe(visible);
 
         open("http://localhost:9999");
-        form.$("[data-test-id=city] input").setValue(clientInfo.getCity());
+        cityInput.setValue(clientInfo.getCity());
         date.doubleClick();
         date.sendKeys(Keys.BACK_SPACE);
         date.setValue(clientInfo.getDate().plusDays(1).format(formatter));

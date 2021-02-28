@@ -16,7 +16,7 @@ public class DataGenerator {
                 faker.address().city(),
                 faker.date().future(40, 3, TimeUnit.DAYS)
                         .toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                faker.name().name(),
+                String.join(" ", faker.name().lastName(), faker.name().firstName()),
                 faker.phoneNumber().phoneNumber());
     }
 }
