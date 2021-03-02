@@ -9,7 +9,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class DataForCardDeliveryOrder {
     private final String city;
-    private final LocalDate date;
+    private final String date;
+    private final String newDate;
     private final String name;
     private final String phone;
 }
