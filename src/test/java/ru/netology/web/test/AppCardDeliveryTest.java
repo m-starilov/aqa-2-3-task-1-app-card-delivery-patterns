@@ -1,12 +1,14 @@
 package ru.netology.web.test;
 
+import io.qameta.allure.selenide.AllureSelenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.web.data.DataForCardDeliveryOrder;
 import ru.netology.web.data.DataGenerator;
-
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -17,6 +19,12 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class AppCardDeliveryTest {
     private DataForCardDeliveryOrder clientInfo = DataGenerator.generateClientInfo();
+
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     void getValidCity(SelenideElement cityField) {
         while (!$(byText(clientInfo.getCity())).exists()) {
@@ -60,5 +68,10 @@ public class AppCardDeliveryTest {
         $(byText("Успешно!")).shouldBe(visible);
         $(withText("Встреча успешно запланирована")).shouldBe(visible);
         $(withText(clientInfo.getNewDate())).shouldBe(visible);
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 }
