@@ -22,7 +22,7 @@ dependencies {
     compile 'com.epam.reportportal:agent-java-junit5:5.0.6'
     compile 'org.apache.logging.log4j:log4j-api:2.11.2'
     compile 'org.apache.logging.log4j:log4j-core:2.11.2'
-    }
+}
 
 test {
     useJUnitPlatform()
